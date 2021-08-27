@@ -1,0 +1,17 @@
+version: 0.2
+env:
+  variables:
+    BUILD_SPEC: 'build'
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+      python: 3.8
+    commands:
+      - npm install -g aws-cdk@1.75.0
+  build:
+    commands:
+      - echo "Artifact for build" > build_output.txt
+artifacts:
+  files:
+    - build_output.txt
