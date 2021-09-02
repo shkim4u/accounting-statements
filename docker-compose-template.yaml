@@ -1,0 +1,31 @@
+version: '3.0'
+
+services:
+  db:
+    image: postgres:13.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: P@ssw0rd
+    ports:
+    - 5432:5432
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://db:5432/postgres -schemas=postgres -user=postgres -password=P@ssw0rd -connectRetries=60 migrate
+    volumes:
+    - ./src/main/db:/flyway/sql
+  mountebank:
+    image: ${MB_IMAGE_NAME}
+    ports:
+    - 5000:5000
+    - 63001:63001
+    - 63002:63002
+    - 63003:63003
+  featuretoggle:
+    image: ${FT_IMAGE_NAME}
+    ports:
+      - 63011:8080
+      - 63012:9000
+  statements:
+    build: .
+    ports:
+      - 63061:9080

@@ -1,0 +1,55 @@
+1. Start Mountebank Docker with docker-compose.
+
+2. Run the following command:
+curl -i -X POST -H 'Content-Type: application/json' http://localhost:5000/imposters --data '{
+  "port": 63002,
+  "protocol": "http",
+  "stubs": [{
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/ledgers/statement"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": {"statement_from": "20200101", "statement_to": "20211231", "total_debit": "0.00", "total_credit": "0.00", "statements": [{"journal_id": "20210730-0001", "details": [{"line": "1", "account_code": "3410", "account_name": "Expenses - ICT - Mobile", "debit": "0.00", "credit": ""}]}]}
+        }
+      }
+    ]
+  }]
+}'
+
+-- Update
+curl -i -X PUT -H 'Content-Type: application/json' http://localhost:5000/imposters/63002/stubs --data '{
+  "port": 63002,
+  "protocol": "http",
+  "stubs": [{
+    "predicates": [
+      {
+        "equals": {
+          "method": "POST",
+          "path": "/ledgers/statement"
+        }
+      }
+    ],
+    "responses": [
+      {
+        "is": {
+          "statusCode": 200,
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": {"statement_from": "20200101", "statement_to": "20211231", "total_debit": "0.00", "total_credit": "0.00", "statements": [{"journal_id": "20210730-0001", "details": [{"line": "1", "account_code": "3410", "account_name": "Expenses - ICT - Mobile", "debit": "0.00", "credit": ""}]}]}
+        }
+      }
+    ]
+  }]
+}'

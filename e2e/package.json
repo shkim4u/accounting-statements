@@ -1,0 +1,20 @@
+{
+  "name": "Cucumber",
+  "version": "1.0.0",
+  "main": "cucumber.js",
+  "author": "Shinsegae I&C",
+  "license": "MIT",
+  "scripts": {
+    "smoke": "./node_modules/@cucumber/cucumber/bin/cucumber-js -t @smoke",
+    "complete": "./node_modules/@cucumber/cucumber/bin/cucumber-js -t @complete",
+    "sample": "./node_modules/@cucumber/cucumber/bin/cucumber-js -t @sample"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^7.1.0",
+    "chai": "^4.3.4",
+    "chai-as-promised": "^7.1.1",
+    "expect-to-be-a-promise": "^1.0.2",
+    "jsonpath": "^1.1.1",
+    "pactum": "^3.0.10"
+  }
+}

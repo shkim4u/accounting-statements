@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.amazon.proserve.account.statements.interfaces.rest.StatementsRestController</OriginalElement>
+  <nodes>
+    <node x="0.0" y="1224.0">com.amazon.proserve.account.statements.application.internal.outboundservices.acl.ExternalLedgerService</node>
+    <node x="71.0" y="747.0">com.amazon.proserve.account.statements.domain.model.aggregates.Statements</node>
+    <node x="871.0" y="927.0">com.amazon.proserve.account.statements.interfaces.rest.dto.GetStatementsResource</node>
+    <node x="551.0" y="1248.0">com.amazon.proserve.account.statements.domain.model.queries.GetStatementsQuery</node>
+    <node x="270.0" y="1128.0">com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService</node>
+    <node x="392.0" y="809.0">com.amazon.proserve.account.statements.interfaces.rest.StatementsRestController</node>
+    <node x="62.0" y="430.0">com.amazon.proserve.account.statements.domain.model.entities.Statement</node>
+    <node x="106.0" y="0.0">com.amazon.proserve.account.statements.domain.model.valueobjects.StatementDetail</node>
+    <node x="693.0" y="1152.0">com.amazon.proserve.account.statements.interfaces.rest.transform.GetStatementsQueryDTOAssembler</node>
+    <node x="234.0" y="1362.0">com.amazon.proserve.account.statements.domain.model.valueobjects.StatementsDuration</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.amazon.proserve.account.statements.application.internal.outboundservices.acl.ExternalLedgerService" target="com.amazon.proserve.account.statements.domain.model.aggregates.Statements" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.interfaces.rest.StatementsRestController" target="com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService" relationship="DEPENDENCY">
+      <point x="-3.848265664808082" y="-3.1923112901249624" />
+      <point x="-3.848265664808082" y="-3.1923112901249624" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.interfaces.rest.StatementsRestController" target="com.amazon.proserve.account.statements.interfaces.rest.dto.GetStatementsResource" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService" target="com.amazon.proserve.account.statements.application.internal.outboundservices.acl.ExternalLedgerService" relationship="TO_ONE">
+      <point x="14.900408133450696" y="0.0" />
+      <point x="14.90040813345081" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.domain.model.entities.Statement" target="com.amazon.proserve.account.statements.domain.model.valueobjects.StatementDetail" relationship="TO_MANY">
+      <point x="4.9935547417398425" y="0.25379330418184054" />
+      <point x="4.9935547417398425" y="0.25379330418184054" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.interfaces.rest.transform.GetStatementsQueryDTOAssembler" target="com.amazon.proserve.account.statements.interfaces.rest.dto.GetStatementsResource" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService" target="com.amazon.proserve.account.statements.domain.model.queries.GetStatementsQuery" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.interfaces.rest.StatementsRestController" target="com.amazon.proserve.account.statements.interfaces.rest.transform.GetStatementsQueryDTOAssembler" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.domain.model.entities.Statement" target="com.amazon.proserve.account.statements.domain.model.valueobjects.StatementDetail" relationship="DEPENDENCY">
+      <point x="-5.006453577254604" y="0.0" />
+      <point x="-5.006453577254604" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService" target="com.amazon.proserve.account.statements.domain.model.aggregates.Statements" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.interfaces.rest.transform.GetStatementsQueryDTOAssembler" target="com.amazon.proserve.account.statements.domain.model.queries.GetStatementsQuery" relationship="CREATE">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.application.internal.outboundservices.acl.ExternalLedgerService" target="com.amazon.proserve.account.statements.domain.model.valueobjects.StatementsDuration" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService" target="com.amazon.proserve.account.statements.application.internal.outboundservices.acl.ExternalLedgerService" relationship="DEPENDENCY">
+      <point x="-1.6778063913482129" y="-4.710091900711859" />
+      <point x="-1.6778063913482129" y="-4.710091900711859" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.domain.model.aggregates.Statements" target="com.amazon.proserve.account.statements.domain.model.entities.Statement" relationship="TO_MANY">
+      <point x="-5.000810433011509" y="0.0" />
+      <point x="-5.000810433011566" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService" target="com.amazon.proserve.account.statements.domain.model.valueobjects.StatementsDuration" relationship="CREATE">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.interfaces.rest.StatementsRestController" target="com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService" relationship="TO_ONE">
+      <point x="6.496432985025422" y="0.0" />
+      <point x="6.496432985025365" y="0.0" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.domain.model.aggregates.Statements" target="com.amazon.proserve.account.statements.domain.model.entities.Statement" relationship="DEPENDENCY">
+      <point x="4.999189698327541" y="-0.09001311091174102" />
+      <point x="4.999189698327541" y="-0.09001311091174102" />
+    </edge>
+    <edge source="com.amazon.proserve.account.statements.interfaces.rest.StatementsRestController" target="com.amazon.proserve.account.statements.domain.model.aggregates.Statements" relationship="DEPENDENCY">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.1527831382549039" showDependencies="true" x="519.0108360030074" y="788.7450779656524" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

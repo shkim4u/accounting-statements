@@ -1,0 +1,147 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'jacoco'
+}
+
+group = 'com.amazon.proserve.account'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.squareup.okhttp3:okhttp:4.0.1'
+	testImplementation 'com.squareup.okhttp3:mockwebserver:4.0.1'
+	testImplementation 'org.hamcrest:hamcrest:2.2'
+
+	// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5'
+
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+//	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+
+	// JSON.
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+	// https://mvnrepository.com/artifact/com.google.code.gson/gson
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+	testImplementation 'io.cucumber:cucumber-java:6.10.4'
+	testImplementation 'io.cucumber:cucumber-junit:6.10.4'
+}
+
+jar {
+	enabled = false
+}
+
+test {
+	jacoco {
+		destinationFile = file("$buildDir/jacoco/jacoco.exec")
+	}
+	useJUnitPlatform()
+	reports {
+		junitXml.setEnabled(true)
+		html.setEnabled(true)
+
+	}
+	finalizedBy 'jacocoTestReport'
+}
+
+jacoco {
+	toolVersion = '0.8.5'
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		html.enabled true
+		xml.enabled true
+		csv.enabled false
+
+		html.destination file("$buildDir/reports/jacoco/jacoco.html")
+		xml.destination file("$buildDir/reports/jacoco/jacoco.xml")
+	}
+
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.70
+			}
+		}
+
+		rule {
+			// Turn on and off.
+			enabled = true
+
+			// Rule check scope: Class
+			element = 'CLASS'
+
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.00
+			}
+
+			limit {
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 700
+			}
+
+			excludes = [
+			]
+		}
+	}
+}
+
+task testCoverage(type: Test) {
+	group 'verification'
+	description 'Runs the unit tests with coverage'
+
+	dependsOn(':test',
+			':jacocoTestReport',
+			':jacocoTestCoverageVerification')
+
+	tasks['jacocoTestReport'].mustRunAfter(tasks['test'])
+	tasks['jacocoTestCoverageVerification'].mustRunAfter(tasks['jacocoTestReport'])
+}
+
+configurations {
+	cucumberRuntime {
+		extendsFrom testImplementation
+	}
+}
+
+task cucumber() {
+	dependsOn assemble, testClasses
+	doLast {
+		javaexec {
+			main = "io.cucumber.core.cli.Main"
+			classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+			args = ['--plugin', 'pretty', '--glue', 'gradle.cucumber', 'src/test/resources']
+		}
+	}
+}
