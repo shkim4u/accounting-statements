@@ -29,3 +29,5 @@
   * Content Type
     * application/json
     * application/x-www-form-urlencoded
+  * GitHub WebHook Event for Push
+    * Header: X-GitHub-Event
