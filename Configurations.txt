@@ -7,7 +7,7 @@
 2. GitHub Access Token
 * ghp_XXX - REVOKED!
 
-2 숙제
+3. 숙제
 - 파이프라인 생성
 - Deploy 단계 전에는 Approval 단계를 두기 -> 단, Main 브랜치에 대해서만.
 - S3의 코드 파이프라인 템플릿 참조
