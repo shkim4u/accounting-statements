@@ -32,5 +32,4 @@
   * GitHub WebHook Event for Push
     * Header: X-GitHub-Event
     * TODO1
-    * TODO2
     * 
