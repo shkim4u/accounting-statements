@@ -342,3 +342,6 @@ fabric.properties
 # For DevOps AOD Cohort 1.
 e2e/node_modules
 docker-compose.yaml
+
+# Added for ensuring github credential not pushed to the repository.
+.github_credentials

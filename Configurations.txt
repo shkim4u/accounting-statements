@@ -5,7 +5,7 @@
 - dev/gitlab -> GITLAB_ACCESS_TOKEN
 
 2. GitHub Access Token
-* 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
+* ghp_XXX - REVOKED!
 
 2 숙제
 - 파이프라인 생성
