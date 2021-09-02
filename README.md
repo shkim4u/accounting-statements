@@ -26,3 +26,6 @@
 * 리포지터리 삭제 시 main, master, develop 브랜치 명이 아닐 경우 CloudFormation Stack 삭제
 * Push 이벤트 시에 CodePipeline 시작
 * GitHub WebHook API Gateway:  https://dvtbbdj2j6.execute-api.ap-northeast-2.amazonaws.com/prod
+  * Content Type
+    * application/json
+    * application/x-www-form-urlencoded
