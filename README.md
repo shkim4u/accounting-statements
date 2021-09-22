@@ -31,7 +31,12 @@
     * application/x-www-form-urlencoded
   * GitHub WebHook Event for Push
     * Header: X-GitHub-Event
-    * TODO1
-    * 
-    * 
-    * 
+    * (2021-09-22) 더 이상 사용되지 않아도 됨
+  * Webhook 이원화
+    * Git Repository 생성 시 설정되는 Webhook
+      * Webhook Payload
+        * create: Branch 생성
+        * delete: Branch 삭제
+    * Pipeline 생성 시 소스 설정 Webhook
+      * Code 푸시
+    * 위와 같이 이원화함으로써 기존 코드에서 제공되는 웹훅은 브랜치의 라이프 사이클을 관리하고, 파이프라인 웹훅은 소스의 변경을 전담하게 함
