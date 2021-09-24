@@ -10,7 +10,7 @@ env:
 phases:
   install:
     runtime-versions:
-#      java: corretto11
+      java: corretto11
     commands:
 
   pre_build:
