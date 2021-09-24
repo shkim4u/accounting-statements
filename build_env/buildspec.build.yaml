@@ -3,9 +3,9 @@ env:
   variables:
     BUILD_SPEC: 'build'
     AWS_PRIVATE_ECR: '489478819445.dkr.ecr.ap-northeast-2.amazonaws.com'
-    SONAR_HOST: http://3.38.98.6:8443
-    SONAR_TOKEN: 3f8e318451f429cf7641903bbd7295c72e3d92dd
-    SONAR_PROJECT_NAME: accounting-statements
+    SONAR_HOST: 'http://3.38.98.6:8443'
+    SONAR_TOKEN: '3f8e318451f429cf7641903bbd7295c72e3d92dd'
+    SONAR_PROJECT_NAME: 'accounting-statements'
 
 phases:
   install:
@@ -29,7 +29,7 @@ phases:
       - |
         echo "Build Accounting-Statements module."
         chmod +x ./gradlew
-        ./gradlew clean build -x test --no-daemon
+        ./gradlew clean build --no-daemon
 #     SAST using SonarQube
       - |
         echo "SCA (Static Code Analysis) for Accounting-Statements."
@@ -63,3 +63,4 @@ artifacts:
     - ./build/**/*
     - ./gradle_home/**/*
     - ./.gradle/**/*
+    - ./build/reports/**/*
