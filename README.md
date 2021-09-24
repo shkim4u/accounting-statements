@@ -45,3 +45,7 @@
 * SonarQube
   * postgres/postgres
   * sonar/Abraca00#1
+* CodeBuild Project에서 SonarQube 서버에 접속할 수 있도록 VPC 액세스 설정
+  * VPC ID: vpc-06750f57d47b5010c
+  * Subnet ID: subnet-0c66c8f89e057d8b1
+  * 보안 그룹: sg-08cb5f9cb82deb401
