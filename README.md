@@ -40,3 +40,8 @@
     * Pipeline 생성 시 소스 설정 Webhook
       * Code 푸시
     * 위와 같이 이원화함으로써 기존 코드에서 제공되는 웹훅은 브랜치의 라이프 사이클을 관리하고, 파이프라인 웹훅은 소스의 변경을 전담하게 함
+
+## DevOps Topic #3
+* SonarQube
+  * postgres/postgres
+  * sonar/Abraca00#1

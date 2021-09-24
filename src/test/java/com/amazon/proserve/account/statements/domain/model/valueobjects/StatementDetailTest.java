@@ -42,6 +42,7 @@ class StatementDetailTest {
         StatementDetail obj2 = new StatementDetail();
         assertNotNull(obj1);
         assertEquals(obj1, obj2);
+        assertNotEquals(null, obj1);
     }
 
     @Test

@@ -3,22 +3,26 @@ env:
   variables:
     BUILD_SPEC: 'build'
     AWS_PRIVATE_ECR: '489478819445.dkr.ecr.ap-northeast-2.amazonaws.com'
+    SONAR_HOST: http://3.38.98.6:8443
+    SONAR_TOKEN: 3f8e318451f429cf7641903bbd7295c72e3d92dd
+    SONAR_PROJECT_NAME: accounting-statements
 
 phases:
   install:
     runtime-versions:
-      java: corretto11
+#      java: corretto11
     commands:
 
   pre_build:
     commands:
-      - echo "#### src_dir:${CODEBUILD_SRC_DIR}"
-      - docker login --username AWS -p $(aws ecr get-login-password --region ap-northeast-2) ${AWS_PRIVATE_ECR}
-      - docker pull ${AWS_PRIVATE_ECR}/amazoncorretto:11 || true
+#      - echo "#### src_dir:${CODEBUILD_SRC_DIR}"
+#      - docker login --username AWS -p $(aws ecr get-login-password --region ap-northeast-2) ${AWS_PRIVATE_ECR}
+#      - docker pull ${AWS_PRIVATE_ECR}/amazoncorretto:11 || true
     finally:
 
   build:
     commands:
+#     Build
       - echo "Artifact for build" > build_output.txt
       - mkdir ${CODEBUILD_SRC_DIR}/gradle_home
       - export GRADLE_USER_HOME=${CODEBUILD_SRC_DIR}/gradle_home
@@ -26,6 +30,32 @@ phases:
         echo "Build Accounting-Statements module."
         chmod +x ./gradlew
         ./gradlew clean build -x test --no-daemon
+#     SAST using SonarQube
+      - |
+        echo "SCA (Static Code Analysis) for Accounting-Statements."
+        ./gradlew sonarqube -Dsonar.projectKey=${SONAR_PROJECT_NAME} -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}
+
+        export SONAR_STATUS="NONE"
+        while [ "${SONAR_STATUS}" == "NONE" ];
+        do
+          echo "Sleep for 5 seconds..."
+#          python -c "import time; time.sleep(5)"
+          sleep 1s
+
+          curl -u ${SONAR_TOKEN}: --location --request GET "${SONAR_HOST}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_NAME}" > sonar_result.json
+          export SONAR_STATUS=$(cat sonar_result.json | jq ".projectStatus.status" | tr -d '"')
+
+          cat sonar_result.json
+        done
+
+        if [ "${SONAR_STATUS}" != "OK" ]; then
+          echo "SonarQube Status = ${SONAR_STATUS}"
+          echo "=== Status Message ==="
+          cat sonar_result.json
+          echo "======================"
+          exit 1
+        fi
+      - echo "Finished SCA (Static Code Analysis) with SonarQube - Host at ${SONAR_HOST}"
     finally:
 
 artifacts:

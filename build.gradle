@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id 'jacoco'
+	id 'org.sonarqube' version '3.0'
 }
 
 group = 'com.amazon.proserve.account'
@@ -86,15 +87,33 @@ jacocoTestReport {
 
 jacocoTestCoverageVerification {
 	violationRules {
+//		rule {
+//			enabled = true
+//			element = 'CLASS'
+//
+//			limit {
+//				counter = 'LINE'
+//				value = 'COVEREDRATIO'
+//				minimum = 0.70
+//			}
+//
+//			excludes = []
+//		}
+
 		rule {
+			// 'element'가 없으면: 프로젝트 전체 파일 결과를 Aggregation.
 			limit {
-				minimum = 0.70
+				// 'couter'를 지정하지 않으면 Default는 'INSTRUCTION'
+				counter = 'LINE'
+				// 'counter'에서 LINE은 라인 커버리지, INSTRUCTION은 실행되는 바이트 단위의 커버리지
+				// 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
+				minimum = 0.65
 			}
 		}
 
 		rule {
 			// Turn on and off.
-			enabled = true
+			enabled = false
 
 			// Rule check scope: Class
 			element = 'CLASS'

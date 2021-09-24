@@ -2,6 +2,7 @@ package com.amazon.proserve.account.statements.interfaces.rest;
 
 import com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService;
 import com.amazon.proserve.account.statements.domain.model.aggregates.Statements;
+import com.amazon.proserve.account.statements.domain.model.valueobjects.StatementsSummaryDetail;
 import com.amazon.proserve.account.statements.domain.model.viewmodels.StatementsSummary;
 import com.amazon.proserve.account.statements.interfaces.rest.dto.GetStatementsExportResource;
 import com.amazon.proserve.account.statements.interfaces.rest.dto.GetStatementsResource;
@@ -17,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 @Slf4j
 @RestController
@@ -25,6 +28,12 @@ import java.io.File;
 public class StatementsRestController {
 
     private StatementsQueryService statementsQueryService;
+
+    private StatementsSummary[] getDefaultStatementSummary() {
+        return new StatementsSummary[] {
+            new StatementsSummary("", new StatementsSummaryDetail(0.f, 0.f))
+        };
+    }
 
     public StatementsRestController(StatementsQueryService statementsQueryService) {
         this.statementsQueryService = statementsQueryService;
@@ -52,19 +61,26 @@ public class StatementsRestController {
      */
     @PostMapping("/summary")
     @ResponseBody
-    public String getStatementSummary(@RequestBody GetStatementsSummaryResource getStatementsSummaryResource) throws JsonProcessingException {
+    public String getStatementSummary(@RequestBody GetStatementsSummaryResource getStatementsSummaryResource) {
         log.info("[StatementRestController] getStatementsSummary().");
-        StatementsSummary[] statementsSummaries = this.statementsQueryService.getStatementsSummary(
-            GetStatementsSummaryQueryDTOAssembler.toQueryFromDTO(getStatementsSummaryResource)
-        );
+
+        /**
+         * [2021/09/23]
+         * Nullish Coalesce.
+         */
+        StatementsSummary[] statementsSummaries = Optional.ofNullable(
+            this.statementsQueryService.getStatementsSummary(
+                GetStatementsSummaryQueryDTOAssembler.toQueryFromDTO(getStatementsSummaryResource)
+            )
+        ).orElseGet(this::getDefaultStatementSummary);
 
         JsonObject jsonObj = new JsonObject();
-        for (StatementsSummary statementsSummary : statementsSummaries) {
-            JsonObject summaryData = new JsonObject();
-            summaryData.addProperty("debit", Float.toString(statementsSummary.getStatementsSummaryDetail().getDebit()));
-            summaryData.addProperty("credit", Float.toString(statementsSummary.getStatementsSummaryDetail().getCredit()));
-            jsonObj.add(statementsSummary.getAccountCode(), summaryData);
-        }
+            for (StatementsSummary statementsSummary : statementsSummaries) {
+                JsonObject summaryData = new JsonObject();
+                summaryData.addProperty("debit", Float.toString(statementsSummary.getStatementsSummaryDetail().getDebit()));
+                summaryData.addProperty("credit", Float.toString(statementsSummary.getStatementsSummaryDetail().getCredit()));
+                jsonObj.add(statementsSummary.getAccountCode(), summaryData);
+            }
 
         return jsonObj.toString();
     }

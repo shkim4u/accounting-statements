@@ -1,7 +1,10 @@
 package com.amazon.proserve.account.statements.interfaces.rest;
 
 
+import com.amazon.proserve.account.common.featuretoggle.Toggle;
 import com.amazon.proserve.account.statements.application.internal.queryservices.StatementsQueryService;
+import com.amazon.proserve.account.statements.domain.model.queries.GetStatementsSummaryQuery;
+import com.amazon.proserve.account.statements.domain.model.viewmodels.StatementsSummary;
 import com.amazon.proserve.account.statements.interfaces.rest.dto.GetStatementsExportResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -62,6 +65,16 @@ public class StatementsRestControllerTest {
     @Test
     @DisplayName("StatementsSummary 테스트")
     public void getStatementsSummary_success() throws Exception {
+//        when(toggle.isEnabled("statements-legacy-acl")).thenReturn(false);
+//
+////        statementsQueryService.toggle = toggle;
+//
+//        when(mockGetStatementSummaryQuery.getTransactionFrom()).thenReturn("20210630");
+//        when(mockGetStatementSummaryQuery.getTransactionTo()).thenReturn("20210731");
+//
+//        StatementsSummary[] response = statementsQueryService.getStatementsSummary(mockGetStatementSummaryQuery);
+//        assertNull(response);
+
         Map<String, String> request = new HashMap<>();
         request.put("transaction_from", "20200101");
         request.put("transaction_to", "20211231");
