@@ -33,7 +33,7 @@ phases:
 #     SAST using SonarQube
       - |
         echo "SCA (Static Code Analysis) for Accounting-Statements."
-        ./gradlew sonarqube -Dsonar.projectKey=${SONAR_PROJECT_NAME} -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}
+        ./gradlew sonarqube -Dsonar.projectKey=${SONAR_PROJECT_NAME} -Dsonar.host.url=${SONAR_HOST} -Dsonar.login=${SONAR_TOKEN}
 
         export SONAR_STATUS="NONE"
         while [ "${SONAR_STATUS}" == "NONE" ];
