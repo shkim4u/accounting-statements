@@ -39,7 +39,6 @@ phases:
         while [ "${SONAR_STATUS}" == "NONE" ];
         do
           echo "Sleep for 5 seconds..."
-#          python -c "import time; time.sleep(5)"
           sleep 1s
 
           curl -u ${SONAR_TOKEN}: --location --request GET "${SONAR_HOST}/api/qualitygates/project_status?projectKey=${SONAR_PROJECT_NAME}" > sonar_result.json
